@@ -1,7 +1,9 @@
+
 class Paciente{
     const property edad
     var property fortalezaMuscular
     var property nivelDeDolor
+    const property rutinaAsignada
 
     method puedeUsar(unAparato) = unAparato.puedeSerUsadoPor(self)
 
@@ -17,6 +19,16 @@ class Paciente{
         if(unAparato.puedeSerUsadoPor(self)){
           unAparato.usarse(self)
         }
+    }
+
+    method puedeRealizarSuRutina(){
+        return (rutinaAsignada.all({ a => self.puedeUsar(a) }))
+    }
+
+    method realizarRutinaAsignada(){
+      if(self.puedeRealizarSuRutina()){
+        rutinaAsignada.forEach({ a => self.usar(a) })
+      }
     }
 
 }
@@ -68,9 +80,9 @@ class Minitramp{
     }
 }
 
-const leonardo = new Paciente(edad=40, fortalezaMuscular=20, nivelDeDolor=10)
-const milena = new Paciente(edad=3, fortalezaMuscular=50, nivelDeDolor=30)
-
 const magneto1 = new Magneto()
 const bici1 = new Bicicleta()
 const minitramp1 = new Minitramp()
+
+const leonardo = new Paciente(edad=40, fortalezaMuscular=20, nivelDeDolor=10, rutinaAsignada=[bici1, minitramp1, bici1, magneto1])
+const milena = new Paciente(edad=3, fortalezaMuscular=50, nivelDeDolor=30, rutinaAsignada=[magneto1, bici1])
